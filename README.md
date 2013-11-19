@@ -1,21 +1,58 @@
 cfs-graphicsmagick
 =========================
 
-Adds .gm() to FileObject and adds .save() to .gm().
+A Meteor package that adds simple image manipulation using GraphicsMagick for
+[CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). The main
+purpose of this is to quickly and easily check and manipulate images
+in the `beforeSave` function for a CollectionFS master file or copy.
+
+## Prerequisites
+
+Install the latest release of `imagemagick` and `graphicsmagick` on your
+development machine and on any servers on which your app will be hosted.
+
+## Installation
+
+Install using Meteorite. When in a Meteorite-managed app directory, enter:
+
+```
+$ mrt add cfs-graphicsmagick
+```
+
+## Usage
 
 ```js
-var fo = new FileObject(fileRecord); //or FileObject.fromFile(file);
+var fo = new FileObject(fileRecord);
 fo.gm().anyGMFunction().save();
 ```
 
-Calling FileObject.gm() gets you a graphicsmagick context and then calling
-save() at the end of your chain saves all of the changes back into the
+Calling `myFileObject.gm()` gets you a GraphicsMagick context and then calling
+`save()` at the end of your chain saves all of the changes back into the
 FileObject buffer.
 
-The main purpose of this is to quickly and easily check and manipulate images
-in the `beforeSave` function for a CollectionFS copy.
+[See all the fun things you can do!](http://aheckmann.github.io/gm/docs.html)
 
-Prerequisites:
+## Example
 
-* Install imagemagick and graphicsmagick on dev machine/server
-* Add `collectionFS` to your project.
+Here's how to resize an image prior to saving it using a CollectionFS
+`beforeSave` function:
+
+```js
+Images = new CollectionFS("images", {
+    useHTTP: true,
+    store: new CollectionFS.FileSystemStore("images", "~/app-images/master"),
+    copies: {
+      thumbnail: {
+        store: new CollectionFS.FileSystemStore("thumbs", "~/app-images/thumbs"),
+        beforeSave: function() {
+          this.gm().resize(60).save(); //create a 60x60 thumbnail
+        }
+      }
+    },
+    filter: {
+      allow: {
+        contentTypes: ['image/*'] //allow only images in this CollectionFS
+      }
+    }
+  });
+```
