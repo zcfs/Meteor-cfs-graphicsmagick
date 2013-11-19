@@ -1,6 +1,10 @@
 cfs-graphicsmagick
 =========================
 
+NOTE: This branch is under active development right now (2013-11-18). It has
+bugs and the API may continue to change. Please help test it and fix bugs,
+but don't use in production yet.
+
 A Meteor package that adds simple image manipulation using GraphicsMagick for
 [CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). The main
 purpose of this is to quickly and easily check and manipulate images
