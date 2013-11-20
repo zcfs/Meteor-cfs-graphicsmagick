@@ -17,6 +17,15 @@ development machine and on any servers on which your app will be hosted.
 
 ## Installation
 
+NOTE: Until this is added to atmosphere, use this in smart.json:
+
+```js
+"cfs-graphicsmagick": {
+  "git": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git",
+  "branch": "master"
+}
+```
+
 Install using Meteorite. When in a Meteorite-managed app directory, enter:
 
 ```
