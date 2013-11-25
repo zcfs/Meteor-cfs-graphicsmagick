@@ -13,14 +13,15 @@ if (typeof FileObject !== "undefined") {
     return subGM(self.buffer, self.name);
   };
   
-  gm.prototype.save = function() {
+  // Filename and type are optional
+  gm.prototype.save = function(type) {
     var self = this;
     var fut = new Future();
     
     var callback = Meteor.bindEnvironment(function(err, buffer) {
       if (err)
         throw err;
-      self._options.fileObject.loadBuffer(buffer);
+      self._options.fileObject.loadBuffer(buffer, type);
       fut.return(self);
     }, function (err) {
       throw err;

@@ -69,3 +69,24 @@ Images = new CollectionFS("images", {
     }
   });
 ```
+
+## Converting to a Different Image Format
+
+To convert every file to a specific image format, you can use the `setFormat`
+method of the `gm` library, but you will also need to specify a new filename to
+change the extension. You can do this by setting the `name` property of the
+`FileObject`.
+
+```js
+beforeSave: function() {
+  this.gm().resize(60).setFormat("PNG").save("image/png"); //create a 60x60 .png thumbnail
+  this.name = path.basename(this.name, path.extname(this.name)) + ".png";
+}
+```
+
+The argument for `setFormat` is any
+[GraphicsMagick format string](http://www.graphicsmagick.org/formats.html).
+In the example, we pass the new content type string to the `save` method. If
+you don't do this, the FileObject will attempt to determine the content type
+from the new buffer data. It is more efficient and foolproof to pass the new
+content type string yourself if you change the format.
