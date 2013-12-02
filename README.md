@@ -8,7 +8,7 @@ but don't use in production yet.
 A Meteor package that adds simple image manipulation using GraphicsMagick for
 [CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). The main
 purpose of this is to quickly and easily check and manipulate images
-in the `beforeSave` function for a CollectionFS master file or copy.
+in the `beforeSave` function for a FS.Collection master file or copy.
 
 ## Prerequisites
 
@@ -35,28 +35,28 @@ $ mrt add cfs-graphicsmagick
 ## Usage
 
 ```js
-var fo = new FileObject(fileRecord);
+var fo = new FS.File(fileRecord);
 fo.gm().anyGMFunction().save();
 ```
 
-Calling `myFileObject.gm()` gets you a GraphicsMagick context and then calling
+Calling `myFSFile.gm()` gets you a GraphicsMagick context and then calling
 `save()` at the end of your chain saves all of the changes back into the
-FileObject buffer.
+FS.File buffer.
 
 [See all the fun things you can do!](http://aheckmann.github.io/gm/docs.html)
 
 ## Example
 
-Here's how to resize an image prior to saving it using a CollectionFS
+Here's how to resize an image prior to saving it using a FS.Collection
 `beforeSave` function:
 
 ```js
-Images = new CollectionFS("images", {
+Images = new FS.Collection("images", {
     useHTTP: true,
-    store: new CollectionFS.FileSystemStore("images", "~/app-images/master"),
+    store: new FS.FileSystemStore("images", "~/app-images/master"),
     copies: {
       thumbnail: {
-        store: new CollectionFS.FileSystemStore("thumbs", "~/app-images/thumbs"),
+        store: new FS.FileSystemStore("thumbs", "~/app-images/thumbs"),
         beforeSave: function() {
           this.gm().resize(60).save(); //create a 60x60 thumbnail
         }
@@ -64,7 +64,7 @@ Images = new CollectionFS("images", {
     },
     filter: {
       allow: {
-        contentTypes: ['image/*'] //allow only images in this CollectionFS
+        contentTypes: ['image/*'] //allow only images in this FS.Collection
       }
     }
   });
@@ -75,18 +75,19 @@ Images = new CollectionFS("images", {
 To convert every file to a specific image format, you can use the `setFormat`
 method of the `gm` library, but you will also need to specify a new filename to
 change the extension. You can do this by setting the `name` property of the
-`FileObject`.
+`FS.File`.
 
 ```js
 beforeSave: function() {
-  this.gm().resize(60).setFormat("PNG").save("image/png"); //create a 60x60 .png thumbnail
-  this.name = path.basename(this.name, path.extname(this.name)) + ".png";
+  var fsFile = this;
+  fsFile.gm().resize(60).setFormat("PNG").save("image/png"); //create a 60x60 .png thumbnail
+  fsFile.name = path.basename(fsFile.name, path.extname(fsFile.name)) + ".png";
 }
 ```
 
 The argument for `setFormat` is any
 [GraphicsMagick format string](http://www.graphicsmagick.org/formats.html).
 In the example, we pass the new content type string to the `save` method. If
-you don't do this, the FileObject will attempt to determine the content type
+you don't do this, the FS.File will attempt to determine the content type
 from the new buffer data. It is more efficient and foolproof to pass the new
 content type string yourself if you change the format.

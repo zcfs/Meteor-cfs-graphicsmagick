@@ -1,15 +1,15 @@
 //wrap gm() object with an object that exposes the same methods, with the addition of a
-//.save() method that overwrites the FileObject's .buffer with the result
+//.save() method that overwrites the FS.File's .buffer with the result
 
 var path = Npm.require('path');
 var Future = Npm.require(path.join('fibers', 'future'));
 var gm = Npm.require('gm');
 
-if (typeof FileObject !== "undefined") {
+if (typeof FS.File !== "undefined") {
 
-  FileObject.prototype.gm = function() {
+  FS.File.prototype.gm = function() {
     var self = this;
-    var subGM = gm.subClass({fileObject: self});
+    var subGM = gm.subClass({fsFile: self});
     return subGM(self.buffer, self.name);
   };
   
@@ -21,7 +21,7 @@ if (typeof FileObject !== "undefined") {
     var callback = Meteor.bindEnvironment(function(err, buffer) {
       if (err)
         throw err;
-      self._options.fileObject.loadBuffer(buffer, type);
+      self._options.fsFile.loadBuffer(buffer, type);
       fut.return(self);
     }, function (err) {
       throw err;

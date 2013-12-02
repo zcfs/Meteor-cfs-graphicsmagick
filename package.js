@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Adds the ability to perform GraphicsMagick manipulation on FileObjects from the CollectionFS package"
+  summary: "Adds the ability to perform GraphicsMagick manipulation on FS.Files from the CollectionFS package"
 });
 
 Npm.depends({
@@ -13,7 +13,7 @@ Package.on_use(function(api) {
   "use strict";
   api.use(['collectionFS']);
   api.add_files([
-    'fileObject-gm.js'
+    'fsFile-gm.js'
   ], 'server');
 });
 

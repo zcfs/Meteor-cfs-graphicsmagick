@@ -1,6 +1,6 @@
 {
   "name": "cfs-graphicsmagick",
-  "description": "GraphicsMagick manipulation on FileObjects from the CollectionFS package",
+  "description": "GraphicsMagick manipulation on FS.Files from the CollectionFS package",
   "homepage": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick",
   "author": "Eric Dobbertin (http://dairystatedesigns.com)",
   "version": "0.1.0",
