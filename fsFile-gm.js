@@ -10,7 +10,7 @@ if (typeof FS.File !== "undefined") {
   FS.File.prototype.gm = function() {
     var self = this;
     var subGM = gm.subClass({fsFile: self});
-    return subGM(self.buffer, self.name);
+    return subGM(self.getBuffer(), self.name);
   };
   
   // Filename and type are optional
@@ -21,7 +21,7 @@ if (typeof FS.File !== "undefined") {
     var callback = Meteor.bindEnvironment(function(err, buffer) {
       if (err)
         throw err;
-      self._options.fsFile.loadBuffer(buffer, type);
+      self._options.fsFile.setDataFromBuffer(buffer, type);
       fut.return(self);
     }, function (err) {
       throw err;
