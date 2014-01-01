@@ -1,9 +1,8 @@
 cfs-graphicsmagick
 =========================
 
-NOTE: This branch is under active development right now (2013-11-18). It has
-bugs and the API may continue to change. Please help test it and fix bugs,
-but don't use in production yet.
+NOTE: This branch is under active development right now (2014-1-1). The API
+may continue to change. Please help test it and fix bugs, but don't use in production yet.
 
 A Meteor package that adds simple image manipulation using GraphicsMagick for
 [CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). The main
@@ -12,12 +11,21 @@ in the `beforeSave` function for a FS.Collection master file or copy.
 
 ## Prerequisites
 
-Install the latest release of `imagemagick` and `graphicsmagick` on your
-development machine and on any servers on which your app will be hosted.
+There are three layers:
+
+* This package, which requires...
+* [gm](http://aheckmann.github.io/gm/docs.html) Node package, which requires...
+* [GraphicsMagick](http://www.graphicsmagick.org/) application and/or [ImageMagick](http://www.imagemagick.org/script/index.php) application
+
+The `gm` dependency is managed for you, but there is still a dependency on the GraphicsMagick application, which does all of the actual processing. This is a normal operating system application, so you have to install it using the correct method for your OS. It's available from some package managers, like Homebrew for OSX, or you can [download](http://sourceforge.net/projects/graphicsmagick/files/) and make/install it from source.
+
+The `gm` Node package also supports ImageMagick. You can use it either instead of or in addition to GraphicsMagick (see the `gm` docs). Usually, GraphicsMagick will be all you'll need, but if you find a need for ImageMagick, you'll need to install the ImageMagick app on your OS, again using a package manager or make/install from source.
+
+Remember that these applications will need to be installed on both your development machine and any hosting servers you use.
 
 ## Installation
 
-NOTE: Until this is added to atmosphere, use this in smart.json:
+NOTE: Until this is added to atmosphere, use this in smart.json for trying out this package:
 
 ```js
 "cfs-graphicsmagick": {
@@ -25,6 +33,8 @@ NOTE: Until this is added to atmosphere, use this in smart.json:
   "branch": "master"
 }
 ```
+
+The following will eventually be the correct installation instructions:
 
 Install using Meteorite. When in a Meteorite-managed app directory, enter:
 
@@ -52,7 +62,6 @@ Here's how to resize an image prior to saving it using a FS.Collection
 
 ```js
 Images = new FS.Collection("images", {
-    useHTTP: true,
     store: new FS.FileSystemStore("images", "~/app-images/master"),
     copies: {
       thumbnail: {
@@ -69,6 +78,8 @@ Images = new FS.Collection("images", {
     }
   });
 ```
+
+Note that this example requires the `cfs-filesystem` package.
 
 ## Converting to a Different Image Format
 
