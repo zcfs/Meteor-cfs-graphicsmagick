@@ -19,7 +19,7 @@ There are three layers:
 
 The `gm` dependency is managed for you, but there is still a dependency on the GraphicsMagick application, which does all of the actual processing. This is a normal operating system application, so you have to install it using the correct method for your OS. It's available from some package managers, like Homebrew for OSX, or you can [download](http://sourceforge.net/projects/graphicsmagick/files/) and make/install it from source.
 
-The `gm` Node package also supports ImageMagick. You can use it either instead of or in addition to GraphicsMagick (see the `gm` docs). Usually, GraphicsMagick will be all you'll need, but if you find a need for ImageMagick, you'll need to install the ImageMagick app on your OS, again using a package manager or make/install from source.
+The `gm` Node package also supports ImageMagick. You can use it either instead of or in addition to GraphicsMagick. Usually, GraphicsMagick will be all you'll need, but if you find a need for ImageMagick, you'll need to install the ImageMagick app on your OS, again using a package manager or make/install from source.
 
 Remember that these applications will need to be installed on both your development machine and any hosting servers you use.
 
@@ -54,6 +54,14 @@ Calling `myFSFile.gm()` gets you a GraphicsMagick context and then calling
 FS.File buffer.
 
 [See all the fun things you can do!](http://aheckmann.github.io/gm/docs.html)
+
+If your server doesn't have GraphicsMagick or you need to use ImageMagick for
+another reason, you can:
+
+```js
+var fo = new FS.File(fileRecord);
+fo.gm({ imageMagick: true }).anyGMFunction().save();
+```
 
 ## Example
 

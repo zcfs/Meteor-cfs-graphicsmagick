@@ -7,9 +7,9 @@ var gm = Npm.require('gm');
 
 if (typeof FS.File !== "undefined") {
 
-  FS.File.prototype.gm = function() {
+  FS.File.prototype.gm = function(options) {
     var self = this;
-    var subGM = gm.subClass({fsFile: self});
+    var subGM = gm.subClass(_.extend({}, options, {fsFile: self}));
     return subGM(self.getBuffer(), self.name);
   };
   
