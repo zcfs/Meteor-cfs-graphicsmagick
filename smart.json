@@ -3,12 +3,16 @@
   "description": "GraphicsMagick manipulation on FS.Files from the CollectionFS package",
   "homepage": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick",
   "author": "Eric Dobbertin (http://dairystatedesigns.com)",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "git": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git",
   "packages": {
-    "collectionFS": {
-      "git": "https://github.com/CollectionFS/Meteor-CollectionFS.git",
-      "branch": "devel-merge"
+    "cfs-base-package": {
+      "git": "https://github.com/CollectionFS/Meteor-cfs-base-package.git",
+      "branch": "master"      
+    }, 
+    "cfs-file": {
+      "git": "https://github.com/CollectionFS/Meteor-cfs-file.git",
+      "branch": "master" 
     }
   }
 }
