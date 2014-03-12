@@ -10,7 +10,7 @@ if (typeof FS.File !== "undefined") {
    * @public
    * @param {Object} options
    * @param {String} [options.type] Content type with which to save
-   * @param {Stream} [options.stream] Write stream to pipe results to. If not set, will pipe to write stream for the 
+   * @param {Stream} [options.stream] Write stream to pipe results to. If not set, will pipe to write stream for the
    */
   FS.File.prototype.gm = function(options) {
     var self = this;
@@ -18,7 +18,7 @@ if (typeof FS.File !== "undefined") {
     var subGM = gm.subClass(_.extend({}, options, {fsFile: self}));
     return subGM(self.createReadStream(options.store), self.name);
   };
-  
+
   /**
    * @param save
    * @public
@@ -29,7 +29,7 @@ if (typeof FS.File !== "undefined") {
   gm.prototype.save = function(options) {
     var self = this;
     options = options || {};
-    var writeStream = self._options.fsFile.createWriteStream(options.store);
+    var writeStream = options.stream || self._options.fsFile.createWriteStream(options.store);
     self.stream(options.type).pipe(writeStream);
   };
 }
