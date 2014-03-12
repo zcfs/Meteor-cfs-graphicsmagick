@@ -6,12 +6,11 @@ Npm.depends({
   gm: "1.13.3"
 });
 
-//also requires that you install the ImageMagick 
+//also requires that you install the ImageMagick
 //and GraphicsMagick apps on your server
 
 Package.on_use(function(api) {
-  "use strict";
-  api.use(['collectionFS']);
+  api.use(['cfs-base-package', 'cfs-file']);
   api.add_files([
     'fsFile-gm.js'
   ], 'server');

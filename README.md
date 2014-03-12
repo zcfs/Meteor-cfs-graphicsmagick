@@ -63,6 +63,9 @@ var fo = new FS.File(fileRecord);
 fo.gm({ imageMagick: true }).anyGMFunction().save();
 ```
 
+Note: The `meteor deploy` servers don't have GraphicsMagick or ImageMagick installed, so you cannot use this
+package if you plan to deploy this way.
+
 ## Example
 
 Here's how to resize an image prior to saving it using a FS.Collection
