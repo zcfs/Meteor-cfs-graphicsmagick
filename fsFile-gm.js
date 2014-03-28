@@ -2,34 +2,47 @@
 //.save() method that overwrites the FS.File's .buffer with the result
 
 var gm = Npm.require('gm');
+var exec = Npm.require('child_process').exec;
 
-if (typeof FS.File !== "undefined") {
 
-  /**
-   * @param FS.File.prototype.gm
-   * @public
-   * @param {Object} options
-   * @param {String} [options.type] Content type with which to save
-   * @param {Stream} [options.stream] Write stream to pipe results to. If not set, will pipe to write stream for the
-   */
-  FS.File.prototype.gm = function(options) {
-    var self = this;
-    options = options || {};
-    var subGM = gm.subClass(_.extend({}, options, {fsFile: self}));
-    return subGM(self.createReadStream(options.store), self.name);
-  };
+var graphicsmagic = false;
+var imagemagic = false;
 
-  /**
-   * @param save
-   * @public
-   * @param {Object} options
-   * @param {String} [options.type] Content type with which to save
-   * @param {Stream} [options.stream] Write stream to pipe results to. If not set, will pipe to write stream for the same store we read from.
-   */
-  gm.prototype.save = function(options) {
-    var self = this;
-    options = options || {};
-    var writeStream = options.stream || self._options.fsFile.createWriteStream(options.store);
-    self.stream(options.type).pipe(writeStream);
-  };
+if (typeof FS.Transform !== "undefined") {
+
+  exec('gm help', function(err, result) {
+    if (err === null) {
+      console.log('=> GraphicsMagic found');
+      // Prefer graphicsmagic
+      FS.Transform.scope.gm = gm;
+
+    } else {
+      // graphicsmagic failed test
+
+      // Check for imagemagic
+      exec('convert -version', function(err, result) {
+        if (err === null) {
+          console.log('=> ImageMagick found');
+
+          // Use imageMagick - we subclass for the user
+          var imageMagick = gm.subClass({ imageMagick: true });
+          FS.Transform.scope.gm = imageMagick;
+
+        } else {
+          // Both failed
+          console.warn('cfs-graphicsmagic could not find "graphicsMagic" or "imageMagic" on the system');
+          // We kinda need one of these...
+          throw new Error('cfs-graphicsmagic need binaries');
+
+        }
+
+      });
+
+    }
+
+  });
+
+} else {
+  // Did not get any scope
+  throw new Error('cfs-graphicsmagic could not add gm to transform scope');
 }
