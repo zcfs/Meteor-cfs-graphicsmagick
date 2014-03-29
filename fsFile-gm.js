@@ -20,7 +20,7 @@ if (typeof FS.Transform !== "undefined") {
   // $MAGICK_HOME (GraphicsMagick docs)
 
   // We check to see if we can find binaries
-  _.each(binaryPaths, function(binPath) {
+  FS.Utility.each(binaryPaths, function(binPath) {
     // If we have not found GraphicsMagic
     if (!graphicsmagic) {
       // Init

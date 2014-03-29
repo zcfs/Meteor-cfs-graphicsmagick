@@ -11,7 +11,7 @@ Npm.depends({
 
 Package.on_use(function(api) {
 
-  api.use(['cfs-base-package', 'cfs-storage-adapter', 'underscore']);
+  api.use(['cfs-base-package', 'cfs-storage-adapter']);
 
   api.add_files([
     'fsFile-gm.js'
