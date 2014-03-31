@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Adds the ability to perform GraphicsMagick manipulation on FS.Files from the CollectionFS package"
+  summary: "Adds the ability to perform GraphicsMagick manipulation on transform streams in the CollectionFS package"
 });
 
 Npm.depends({
@@ -10,10 +10,13 @@ Npm.depends({
 //and GraphicsMagick apps on your server
 
 Package.on_use(function(api) {
-  api.use(['cfs-base-package', 'cfs-file']);
+
+  api.use(['cfs-base-package', 'cfs-storage-adapter']);
+
   api.add_files([
     'fsFile-gm.js'
   ], 'server');
+
 });
 
 Package.on_test(function(api) {

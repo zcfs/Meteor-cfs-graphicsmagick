@@ -1,12 +1,18 @@
 {
 	"name": "cfs-graphicsmagick",
-	"description": "GraphicsMagick manipulation on FS.Files from the CollectionFS package",
+	"description": "GraphicsMagick manipulation on transform streams in the CollectionFS package",
 	"homepage": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick",
 	"author": "Eric Dobbertin (https://github.com/aldeed), Morten Henriksen (https://github.com/raix)",
-	"version": "0.0.3",
+	"version": "0.0.8",
 	"git": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git",
 	"packages": {
-		"cfs-base-package": {},
-		"cfs-file": {}
+		"cfs-base-package": {
+			"git": "https://github.com/CollectionFS/Meteor-cfs-base-package.git",
+			"branch": "master"
+		},
+		"cfs-storage-adapter": {
+			"git": "https://github.com/CollectionFS/Meteor-cfs-storage-adapter.git",
+			"branch": "master"
+		}
 	}
 }
