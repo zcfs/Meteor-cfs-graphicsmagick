@@ -1,13 +1,10 @@
 cfs-graphicsmagick
 =========================
 
-NOTE: This branch is under active development right now (2014-3-13). The API
-may continue to change. Please help test it and fix bugs, but don't use in production yet.
-
-A Meteor package that adds simple image manipulation using GraphicsMagick for
+A Meteor package that adds simple image manipulation using GraphicsMagick or ImageMagick for
 [CollectionFS](https://github.com/CollectionFS/Meteor-CollectionFS). The main
 purpose of this is to quickly and easily check and manipulate images
-in the `beforeSave` function for a FS.Collection master file or copy.
+in your store transformation functions.
 
 ## Prerequisites
 
@@ -23,18 +20,10 @@ The `gm` Node package also supports ImageMagick. You can use it either instead o
 
 Remember that these applications will need to be installed on both your development machine and any hosting servers you use.
 
+Note: The `meteor deploy` servers don't have GraphicsMagick or ImageMagick installed, so you cannot use this
+package if you plan to deploy this way.
+
 ## Installation
-
-NOTE: Until this is added to atmosphere, use this in smart.json for trying out this package:
-
-```js
-"cfs-graphicsmagick": {
-  "git": "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git",
-  "branch": "master"
-}
-```
-
-The following will eventually be the correct installation instructions:
 
 Install using Meteorite. When in a Meteorite-managed app directory, enter:
 
@@ -44,28 +33,23 @@ $ mrt add cfs-graphicsmagick
 
 ## Usage
 
-To use this package, first get an instance of `FS.File` that somehow has data attached. You can attach the data directly, use an instance that's mounted on an `FS.Collection` instance, or call this within a `beforeSave` function.
-
-Once you have the necessary `FS.File` instance, simply call `gm()` on it to enter a `gm` context, and then call any of the supported methods as documented [in the gm package docs](http://aheckmann.github.io/gm/docs.html). After applying all transformations, call `save()` with a `stream` option (unless you loaded the data from a store and want to write back to the same store, in which case the `stream` option is not necessary).
-
-If your server doesn't have GraphicsMagick or you need to use ImageMagick for
-another reason, you can pass the `imageMagick` option to `gm`: `fileObj.gm({ imageMagick: true })`.
-
-Note: The `meteor deploy` servers don't have GraphicsMagick or ImageMagick installed, so you cannot use this
-package if you plan to deploy this way.
-
 The following are some examples.
 
-### In a beforeSave Function
+### In a transformWrite Function
 
 ```js
 Images = new FS.Collection("images", {
     stores: [
-      new FS.Store.FileSystem("images", {path: "~/app-images/master"}),
+      new FS.Store.FileSystem("images"),
       new FS.Store.FileSystem("thumbs", {
-        path: "~/app-images/thumbs",
-        beforeSave: function(writeStream) {
-          this.gm().resize(60).save({stream: writeStream}); //create a 60x60 thumbnail
+        // We want to transform the writes to the store using streams:
+        transformWrite: function(fileObj, readStream, writeStream) {
+    
+          // Transform the image into a 10x10px thumbnail
+          this.gm(readStream, fileObj.name).resize('10', '10').stream().pipe(writeStream);
+    
+          // To pass it through:
+          //readStream.pipe(writeStream);
         }
       )
     ],
@@ -74,25 +58,27 @@ Images = new FS.Collection("images", {
         contentTypes: ['image/*'] //allow only images in this FS.Collection
       }
     }
-  });
+});
 ```
 
 Note that this example requires the `cfs-filesystem` package.
 
-### In a beforeSave Function and Converting to a Different Image Format
+### In a transformWrite Function and Converting to a Different Image Format
 
 To convert every file to a specific image format, you can use the `setFormat`
-method of the `gm` library and pass a `type` option to the `save` method, but you will also need to specify a new filename to
-change the extension. You can do this by setting the `name` property of the
-`FS.File`.
+method of the `gm` library, but you will also need to alter the `FS.File` instance as necessary.
+
+TODO need to test and make sure this works. What about setting the new size? Does that happen automatically?
 
 ```js
-beforeSave: function(writeStream) {
-  var fsFile = this;
-  if (typeof fsFile.name === "string") {
-    fsFile.name = path.basename(fsFile.name, path.extname(fsFile.name)) + ".png";
+transformWrite: function(fileObj, readStream, writeStream) {
+  // Convert
+  this.gm(readStream, fileObj.name).setFormat("PNG").stream().pipe(writeStream);
+  // Update the file object info
+  if (typeof fileObj.name === "string") {
+    fileObj.name = path.basename(fileObj.name, path.extname(fileObj.name)) + ".png";
+    fileObj.type = "image/png";
   }
-  fsFile.gm().resize(60).setFormat("PNG").save({type: "image/png", stream: writeStream}); //create a 60x60 .png thumbnail
 }
 ```
 
@@ -101,10 +87,12 @@ The argument for `setFormat` is any
 
 ### Converting a File Already Stored
 
-To do this, we stream out of the store and then back into it:
+TODO this doesn't work anymore. How should we do this now?
 
-```js
-Images.findOne(imageId).gm({store: 'thumbs'}).rotate(90).save();
-```
-
-By passing a `store` option to `gm` we tell it to stream file data from that store, and by not passing a write stream to `save`, we tell it to stream the results back to the source store. You could alternatively stream the results to a different store or to a new `FS.File` instance.
+> To do this, we stream out of the store and then back into it:
+> 
+> ```js
+> Images.findOne(imageId).gm({store: 'thumbs'}).rotate(90).save();
+> ```
+>
+> By passing a `store` option to `gm` we tell it to stream file data from that store, and by not passing a write stream to `save`, we tell it to stream the results back to the source store. You could alternatively stream the results to a different store or to a new `FS.File` instance.
