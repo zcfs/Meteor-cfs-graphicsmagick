@@ -3,7 +3,7 @@ Package.describe({
 });
 
 Npm.depends({
-  gm: "1.13.3"
+  gm: "1.14.2"
 });
 
 //also requires that you install the ImageMagick
@@ -11,7 +11,7 @@ Npm.depends({
 
 Package.on_use(function(api) {
 
-  api.use(['cfs-base-package', 'cfs-storage-adapter']);
+  api.use(['cfs-base-package', 'cfs-storage-adapter'], 'server');
 
   api.add_files([
     'fsFile-gm.js'
@@ -21,5 +21,5 @@ Package.on_use(function(api) {
 
 Package.on_test(function(api) {
   api.use(['cfs-graphicsmagick', 'test-helpers', 'tinytest'], 'server');
-  api.add_files('tests.js', 'server');
+  api.add_files('tests/server-tests.js', 'server');
 });
