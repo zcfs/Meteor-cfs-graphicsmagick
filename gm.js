@@ -75,6 +75,7 @@ if (!graphicsmagick && !imagemagick) {
 'Installation hints:\n' +
 '* Mac OS X "brew install graphicsmagick" or "brew install imagemagick"\n' +
 '* Linux download rpm or use packagemanager\n' +
+'* Centos "yum install GraphicsMagick"' +
 '* Windows download the installer and run');
 
 } else {
