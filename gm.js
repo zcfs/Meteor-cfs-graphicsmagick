@@ -16,6 +16,9 @@ var imagemagic = false;
 // XXX: windows is not tested
 var binaryPaths = process.env['PATH'].split(/:|;/);
 
+// XXX: we should properly check if we can access the os temp folder - since
+// gm binaries are using this and therefor may fail?
+
 // XXX: we could push extra paths if the `gm` library check stuff like:
 // $MAGIC_HOME The current version does not check there
 // $MAGICK_HOME (GraphicsMagick docs)
