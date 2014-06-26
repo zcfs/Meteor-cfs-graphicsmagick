@@ -78,20 +78,19 @@ if (!graphicsmagick && !imagemagick) {
 '* Centos "yum install GraphicsMagick"' +
 '* Windows download the installer and run');
 
+  gm.isReady = false;
+
 } else {
   // Rig the gm scope
 
   if (graphicsmagick) {
-
     // Prefer graphicsmagick
     gm = nodegm;
-
   } else {
-
     // Use imageMagick - we subclass for the user
     var imageMagick = nodegm.subClass({ imageMagick: true });
     gm = imageMagick;
-
   }
 
+  gm.isReady = true;
 }
