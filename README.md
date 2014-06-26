@@ -7,7 +7,7 @@ But the package tests the environment and automatically uses graphicsmagick or i
 
 The `gm` scope is also set accordingly to either graphicsmagick or imagemagick - *so you dont have to change your code depending on the server installation of gm/im.*
 
-If no binaries found on the system it will warn and throw an error if used, again with a fitting description. If you don't know whether graphicsmagick or imagemagick will be installed at the time of running, you can check the `gm.isReady` boolean flag.
+If no binaries found on the system it will warn and throw an error if used, again with a fitting description. If you don't know whether graphicsmagick or imagemagick will be installed at the time of running, you can check the `gm.isAvailable` boolean flag before calling `gm()`.
 
 -
 

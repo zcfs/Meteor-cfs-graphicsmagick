@@ -78,7 +78,7 @@ if (!graphicsmagick && !imagemagick) {
 '* Centos "yum install GraphicsMagick"' +
 '* Windows download the installer and run');
 
-  gm.isReady = false;
+  gm.isAvailable = false;
 
 } else {
   // Rig the gm scope
@@ -92,5 +92,5 @@ if (!graphicsmagick && !imagemagick) {
     gm = imageMagick;
   }
 
-  gm.isReady = true;
+  gm.isAvailable = true;
 }
