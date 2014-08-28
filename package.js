@@ -1,4 +1,5 @@
 Package.describe({
+  version: '0.0.0',
   summary: "Adds `gm` to scope with the ability to perform GraphicsMagick or ImageMagick manipulation"
 });
 
