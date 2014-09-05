@@ -1,4 +1,5 @@
 Package.describe({
+  name: 'cfs:graphicsmagick',
   version: '0.0.0',
   summary: "Adds `gm` to scope with the ability to perform GraphicsMagick or ImageMagick manipulation"
 });
@@ -11,6 +12,7 @@ Npm.depends({
 //and GraphicsMagick apps on your server
 
 Package.on_use(function(api) {
+  api.versionsFrom('METEOR@0.9.1');
 
   api.add_files('gm.js', 'server');
 
@@ -18,6 +20,6 @@ Package.on_use(function(api) {
 });
 
 Package.on_test(function(api) {
-  api.use(['cfs-graphicsmagick', 'test-helpers', 'tinytest'], 'server');
+  api.use(['cfs:graphicsmagick', 'test-helpers', 'tinytest'], 'server');
   api.add_files('tests/server-tests.js', 'server');
 });

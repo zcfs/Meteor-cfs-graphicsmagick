@@ -1,4 +1,4 @@
-cfs-graphicsmagick
+cfs:graphicsmagick
 =========================
 
 This package simply adds `gm` to scope.
