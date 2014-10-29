@@ -36,8 +36,6 @@ for (var i = 0; i < binaryPaths.length; i++) {
     // Check to see if binary found
     graphicsmagick = fs.existsSync(gmPath) || fs.existsSync(gmExePath);
 
-    if (graphicsmagick) console.log('=> GraphicsMagick found');
-
     // If GraphicsMagic we dont have to check for ImageMagic
     // Since we prefer GrapicsMagic when selecting api
     if (!graphicsmagick && !imagemagick) {
@@ -47,8 +45,6 @@ for (var i = 0; i < binaryPaths.length; i++) {
 
       // Check to see if binary found
       imagemagick = fs.existsSync(imPath) || fs.existsSync(imExePath);
-
-      if (imagemagick) console.log('=> ImageMagick found');
 
     }
   }
