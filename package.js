@@ -1,4 +1,5 @@
 Package.describe({
+  git: 'https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git',
   name: 'cfs:graphicsmagick',
   version: '0.0.1',
   summary: "Adds `gm` to scope with the ability to perform GraphicsMagick or ImageMagick manipulation",
@@ -12,15 +13,15 @@ Npm.depends({
 //also requires that you install the ImageMagick
 //and GraphicsMagick apps on your server
 
-Package.on_use(function(api) {
-  api.versionsFrom('METEOR@0.9.1');
+Package.onUse(function(api) {
+  api.versionsFrom('1.0');
 
-  api.add_files('gm.js', 'server');
+  api.addFiles('gm.js', 'server');
 
   api.export('gm');
 });
 
-Package.on_test(function(api) {
+Package.onTest(function(api) {
   api.use(['cfs:graphicsmagick', 'test-helpers', 'tinytest'], 'server');
-  api.add_files('tests/server-tests.js', 'server');
+  api.addFiles('tests/server-tests.js', 'server');
 });
