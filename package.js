@@ -1,5 +1,4 @@
 Package.describe({
-  git: 'https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git',
   name: 'cfs:graphicsmagick',
   version: '0.0.17',
   summary: "Adds `gm` to scope with the ability to perform GraphicsMagick or ImageMagick manipulation",

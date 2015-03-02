@@ -1,12 +1,9 @@
-//wrap gm() object with an object that exposes the same methods, with the addition of a
-//.save() method that overwrites the FS.File's .buffer with the result
-
 var nodegm = Npm.require('gm');
 var path = Npm.require('path');
 var fs = Npm.require('fs');
 
 gm = function() {
-  throw new Error('cfs:Graphicsmagic could not find "graphicsMagick" or "imageMagick"');
+  throw new Error('cfs:graphicsmagick could not find "graphicsMagick" or "imageMagick"');
 };
 
 var graphicsmagick = false;
@@ -17,7 +14,7 @@ var imagemagick = false;
 var binaryPaths = process.env['PATH'].split(/:|;/);
 
 // XXX: we should properly check if we can access the os temp folder - since
-// gm binaries are using this and therefor may fail?
+// gm binaries are using this and therefore may fail?
 
 // XXX: we could push extra paths if the `gm` library check stuff like:
 // $MAGIC_HOME The current version does not check there
@@ -52,27 +49,28 @@ for (var i = 0; i < binaryPaths.length; i++) {
 
 
 if (!graphicsmagick && !imagemagick) {
-        // Both failed
-        console.warn(
-'WARNING:\n' +
-'cfs:graphicsmagick could not find "graphicsMagic" or "imageMagic" on the\n' +
-'system.\n' +
-'\n' +
-'I just checked PATH to see if I could find the GraphicsMagick or ImageMagic\n' +
-'unix/mac os/windows binaries on your system, I failed.\n' +
-'\n' +
-'Why:\n' +
-'1. I may be blind or naive, help making me smarter\n' +
-'2. You havent added the path to the binaries\n' +
-'3. You havent actually installed GraphicsMagick or ImageMagick\n' +
-'\n' +
-'*** Make sure "$PATH" environment is configured "PATH:/path/to/binaries" ***\n' +
-'\n' +
-'Installation hints:\n' +
-'* Mac OS X "brew install graphicsmagick" or "brew install imagemagick"\n' +
-'* Linux download rpm or use packagemanager\n' +
-'* Centos "yum install GraphicsMagick"' +
-'* Windows download the installer and run');
+  // Both failed
+  console.warn(
+    'WARNING:\n' +
+    'cfs:graphicsmagick could not find "graphicsMagic" or "imageMagic" on the\n' +
+    'system.\n' +
+    '\n' +
+    'I just checked PATH to see if I could find the GraphicsMagick or ImageMagic\n' +
+    'unix/mac os/windows binaries on your system, I failed.\n' +
+    '\n' +
+    'Why:\n' +
+    '1. I may be blind or naive, help making me smarter\n' +
+    '2. You havent added the path to the binaries\n' +
+    '3. You havent actually installed GraphicsMagick or ImageMagick\n' +
+    '\n' +
+    '*** Make sure "$PATH" environment is configured "PATH:/path/to/binaries" ***\n' +
+    '\n' +
+    'Installation hints:\n' +
+    '* Mac OS X "brew install graphicsmagick" or "brew install imagemagick"\n' +
+    '* Linux download rpm or use packagemanager\n' +
+    '* Centos "yum install GraphicsMagick"' +
+    '* Windows download the installer and run'
+  );
 
   gm.isAvailable = false;
 
