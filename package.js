@@ -10,7 +10,7 @@ Npm.depends({
 });
 
 //also requires that you install the ImageMagick
-//and GraphicsMagick apps on your server
+//or GraphicsMagick app on your server
 
 Package.onUse(function(api) {
   api.versionsFrom('1.0');
