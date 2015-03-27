@@ -9,9 +9,13 @@ gm = function() {
 var graphicsmagick = false;
 var imagemagick = false;
 
-// Split the path by : or ;
-// XXX: windows is not tested
-var binaryPaths = process.env['PATH'].split(/:|;/);
+// Split the path by : or ; for linux
+// Split the path by ; for windows
+if (/^win/.test(process.platform)) {
+  var binaryPaths = process.env['PATH'].split(/;/);
+} else {
+  var binaryPaths = process.env['PATH'].split(/:|;/);
+}
 
 // XXX: we should properly check if we can access the os temp folder - since
 // gm binaries are using this and therefore may fail?
