@@ -1,6 +1,13 @@
 cfs:graphicsmagick
 =========================
 
+~~Looking for maintainers - please reach out!~~
+This package is to be archived due to inability to find contributors, thanks to everyone who helped make it possible.
+
+**If you're looking for an alternative, we highly recommend [Meteor-Files](https://github.com/VeliovGroup/Meteor-Files) by [VeliovGroup](https://github.com/VeliovGroup)**
+
+---
+
 This package simply adds `gm` to scope, but it also tests the environment and automatically uses graphicsmagick or imagemagick if available. This makes debugging much easier.
 
 The `gm` scope is also set accordingly to either graphicsmagick or imagemagick *so you dont have to change your code depending on the server installation of gm/im.*
