@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'cfs:graphicsmagick',
+  name: 'zcfs:graphicsmagick',
   version: '0.0.18',
   summary: "Adds `gm` to scope with the ability to perform GraphicsMagick or ImageMagick manipulation",
-  git: "https://github.com/CollectionFS/Meteor-cfs-graphicsmagick.git"
+  git: "https://github.com/zcfs/Meteor-cfs-graphicsmagick.git"
 });
 
 Npm.depends({
@@ -21,6 +21,6 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use(['cfs:graphicsmagick', 'test-helpers', 'tinytest'], 'server');
+  api.use(['zcfs:graphicsmagick', 'test-helpers', 'tinytest'], 'server');
   api.addFiles('tests/server-tests.js', 'server');
 });

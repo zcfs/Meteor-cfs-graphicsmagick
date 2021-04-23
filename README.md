@@ -1,4 +1,4 @@
-cfs:graphicsmagick
+zcfs:graphicsmagick
 =========================
 
 ~~Looking for maintainers - please reach out!~~
@@ -18,4 +18,4 @@ If no binaries are found on the system, it will warn and throw an error when use
 
 **This package does not require `CollectionFS` and can be used alone.**
 
-For use with `CollectionFS`, please refer to [the CollectionFS documentation](https://github.com/CollectionFS/Meteor-CollectionFS#image-manipulation) for instructions.
+For use with `CollectionFS`, please refer to [the CollectionFS documentation](https://github.com/zcfs/Meteor-CollectionFS#image-manipulation) for instructions.

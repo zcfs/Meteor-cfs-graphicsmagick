@@ -3,7 +3,7 @@ var path = Npm.require('path');
 var fs = Npm.require('fs');
 
 gm = function() {
-  throw new Error('cfs:graphicsmagick could not find "graphicsMagick" or "imageMagick"');
+  throw new Error('zcfs:graphicsmagick could not find "graphicsMagick" or "imageMagick"');
 };
 
 var graphicsmagick = false;
@@ -53,7 +53,7 @@ if (!graphicsmagick && !imagemagick) {
   // Both failed
   console.warn(
     'WARNING:\n' +
-    'cfs:graphicsmagick could not find "graphicsMagic" or "imageMagic" on the\n' +
+    'zcfs:graphicsmagick could not find "graphicsMagic" or "imageMagic" on the\n' +
     'system.\n' +
     '\n' +
     'I just checked PATH to see if I could find the GraphicsMagick or ImageMagic\n' +
